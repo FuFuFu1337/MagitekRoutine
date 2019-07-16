@@ -20,6 +20,7 @@ namespace Magitek.Logic.Astrologian
             if (Core.Me.CurrentManaPercent < AstrologianSettings.Instance.TankBusterMinimumMpPercent)
                 return false;
 
+            // TODO precast CelestialIntersection for shield
             if (await Benefic2()) return true;
             if (await Helios()) return true;
             if (await AspectedHelios()) return true;

@@ -28,7 +28,8 @@ namespace Magitek.Logic.Astrologian
         {
             if (!AstrologianSettings.Instance.Play) return false;
 
-            if (Core.Me.HasAura(Auras.Lightspeed)) return false;
+            // should use sleeve draw with lightspeed and put out as many cards as possible
+            // if (Core.Me.HasAura(Auras.Lightspeed)) return false;
 
             if (OnGcd) return false;
 

@@ -51,8 +51,10 @@ namespace Magitek.Utilities
         public static readonly SpellData Malefic = DataManager.GetSpellData(3596);
         public static readonly SpellData Malefic2 = DataManager.GetSpellData(3598);
         public static readonly SpellData Malefic3 = DataManager.GetSpellData(7442);
+        public static readonly SpellData Malefic4 = DataManager.GetSpellData(16555);
         public static readonly SpellData Combust = DataManager.GetSpellData(3599);
         public static readonly SpellData Combust2 = DataManager.GetSpellData(3608);
+        public static readonly SpellData Combust3 = DataManager.GetSpellData(16554);
         public static readonly SpellData Gravity = DataManager.GetSpellData(3615);
         public static readonly SpellData Lightspeed = DataManager.GetSpellData(3606);
         public static readonly SpellData DiurnalSect = DataManager.GetSpellData(3604);
@@ -76,6 +78,9 @@ namespace Magitek.Utilities
         public static readonly SpellData MinorArcana = DataManager.GetSpellData(7443);
         public static readonly SpellData LordOfCrowns = DataManager.GetSpellData(7444);
         public static readonly SpellData LadyOfCrowns = DataManager.GetSpellData(7445);
+        public static readonly SpellData CelestialIntersection = DataManager.GetSpellData(16556);
+        public static readonly SpellData Horoscope = DataManager.GetSpellData(16557);
+        public static readonly SpellData HoroscopeTrigger = DataManager.GetSpellData(16558);
         public static readonly SpellData HeavyShot = DataManager.GetSpellData(97);
         public static readonly SpellData StraightShot = DataManager.GetSpellData(98);
         public static readonly SpellData VenomousBite = DataManager.GetSpellData(100);

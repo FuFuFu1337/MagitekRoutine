@@ -57,29 +57,32 @@ namespace Magitek.Rotations.Astrologian
             if (await Logic.Astrologian.Heal.Ascend()) return true;
 
             // Scalebound Extreme Rathalos
-          if (Core.Me.HasAura(1495))
+            if (Core.Me.HasAura(1495))
             {
                 if (await Dispel.Execute()) return true;
                 return false;
             }
 
             if (await Logic.Astrologian.Heal.EssentialDignity()) return true;
+            if (await Logic.Astrologian.Heal.CelestialIntersection()) return true;
+            // TODO Celestial Intersection
             if (await Dispel.Execute()) return true;
             if (await Buff.LucidDreaming()) return true;
             if (await Buff.Lightspeed()) return true;
+            // TODO Neutral Sect
             if (await Buff.Synastry()) return true;
             if (await Buff.CelestialOpposition()) return true;
 
             if (DutyManager.InInstance || Core.Me.InCombat)
             {
-
                 if (Globals.InParty)
                 {
+                    // TODO horoscope
                     if (await Logic.Astrologian.Heal.EssentialDignity()) return true;
                     if (await Logic.Astrologian.Heal.AspectedHelios()) return true;
                     if (await Logic.Astrologian.Heal.CollectiveUnconscious()) return true;
                     if (await Logic.Astrologian.Heal.Helios()) return true;
-                    if (await Logic.Astrologian.Heal.LadyOfCrowns()) return true;
+                    // if (await Logic.Astrologian.Heal.LadyOfCrowns()) return true;
                     if (await Logic.Astrologian.Heal.Benefic2()) return true;
                 }
 
@@ -88,7 +91,7 @@ namespace Magitek.Rotations.Astrologian
                 if (await Logic.Astrologian.Heal.EarthlyStar()) return true;
             }
 
-            if (await Logic.Astrologian.Heal.LadyOfCrowns()) return true;
+            // if (await Logic.Astrologian.Heal.LadyOfCrowns()) return true;
             if (await Logic.Astrologian.Heal.Benefic()) return true;
             if (await Card.Play()) return true;
             return await Card.Draw();

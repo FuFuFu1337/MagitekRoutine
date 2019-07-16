@@ -139,7 +139,7 @@ namespace Magitek.Models.Astrologian
         public bool LucidDreaming { get; set; }
 
         [Setting]
-        [DefaultValue(60.0f)]
+        [DefaultValue(85.0f)]
         public float LucidDreamingManaPercent { get; set; }
         
         #endregion
@@ -225,6 +225,18 @@ namespace Magitek.Models.Astrologian
         [Setting]
         [DefaultValue(40.0f)]
         public float EssentialDignityHealthPercent { get; set; }
+
+        [Setting]
+        [DefaultValue(true)]
+        public bool CelestialIntersection { get; set; }
+
+        [Setting]
+        [DefaultValue(true)]
+        public bool CelestialIntersectionTankOnly { get; set; }
+
+        [Setting]
+        [DefaultValue(40.0f)]
+        public float CelestialIntersectionHealthPercent { get; set; }
 
         [Setting]
         [DefaultValue(true)]

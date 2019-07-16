@@ -222,7 +222,43 @@ namespace Magitek.Logic.Astrologian
                 return await Spells.EssentialDignity.Heal(Core.Me, false);
             }
         }
-        
+
+        public static async Task<bool> CelestialIntersection()
+        {
+            if (!AstrologianSettings.Instance.CelestialIntersection)
+                return false;
+
+            if (!Core.Me.InCombat)
+                return false;
+
+            if (Globals.InParty)
+            {
+                if (AstrologianSettings.Instance.CelestialIntersectionTankOnly)
+                {
+                    var tar = Group.CastableTanks.FirstOrDefault(r => !Utilities.Routines.Astrologian.DontCelestialIntersection.Contains(r.Name) && r.IsAlive && r.CurrentHealthPercent <= AstrologianSettings.Instance.CelestialIntersectionHealthPercent);
+
+                    if (tar == null)
+                        return false;
+
+                    return await Spells.CelestialIntersection.Heal(tar, false);
+                }
+
+                var celestialIntersectionTarget = Group.CastableAlliesWithin30.FirstOrDefault(r => !Utilities.Routines.Astrologian.DontCelestialIntersection.Contains(r.Name) && r.CurrentHealth > 0 && r.CurrentHealthPercent <= AstrologianSettings.Instance.CelestialIntersectionHealthPercent);
+
+                if (celestialIntersectionTarget == null)
+                    return false;
+
+                return await Spells.CelestialIntersection.Heal(celestialIntersectionTarget);
+            }
+            else
+            {
+                if (Core.Me.CurrentHealthPercent > AstrologianSettings.Instance.CelestialIntersectionHealthPercent)
+                    return false;
+
+                return await Spells.CelestialIntersection.Heal(Core.Me, false);
+            }
+        }
+
         public static async Task<bool> Helios()
         {
             if (!AstrologianSettings.Instance.Helios)
