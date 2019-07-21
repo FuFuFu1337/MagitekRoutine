@@ -9,6 +9,7 @@ using Magitek.Enumerations;
 using Magitek.Extensions;
 using Magitek.Models.Astrologian;
 using Magitek.Utilities.Managers;
+using static ff14bot.Managers.ActionResourceManager.Astrologian;
 using TreeSharp;
 
 namespace Magitek.Utilities.Routines
@@ -294,14 +295,32 @@ namespace Magitek.Utilities.Routines
             return ActionResourceManager.Astrologian.Cards[0];
         }
 
-        public static ActionResourceManager.Astrologian.AstrologianCard HeldCard()
-        {
-            return ActionResourceManager.Astrologian.Cards[1];
-        }
-
         public static ActionResourceManager.Astrologian.AstrologianCardBuff CardBuff()
         {
             return ActionResourceManager.Astrologian.Buff;
+        }
+
+        public static AstrologianCardType CardToCardType(AstrologianCard card)
+        {
+            switch (card)
+            {
+                // Melee DPS
+                case AstrologianCard.Arrow:
+                case AstrologianCard.Balance:
+                case AstrologianCard.Spear:
+                    return AstrologianCardType.MeleeDPS;
+                // Ranged DPS
+                case AstrologianCard.Bole:
+                case AstrologianCard.Ewer:
+                case AstrologianCard.Spire:
+                    return AstrologianCardType.RangedDPS;
+                case AstrologianCard.LordofCrowns:
+                    return AstrologianCardType.UpgradedMeleeDPS;
+                case AstrologianCard.LadyofCrowns:
+                    return AstrologianCardType.UpgradedRangedDPS;
+            }
+
+            return AstrologianCardType.None;
         }
         
         public static bool CanRedraw = false;

@@ -732,39 +732,16 @@ namespace Magitek.Models.Astrologian
     {
         public int CardPriority { get; set; }
         public CardLogicType LogicType { get; set; }
-        public CardPlayType PlayType { get; set; }
-        public ActionResourceManager.Astrologian.AstrologianCard Card { get; set; }
-        public Conditions Conditions { get; set; }
-        public CardAction Action { get; set; }
-        public CardTarget Target { get; set; }
+        public AstrologianCardType CardType { get; set; }
         public TargetConditions TargetConditions { get; set; }
-
-        public bool HasConditions => Conditions != null;
-    }
-
-    //TODO: Add MinLevel 
-    public class Conditions
-    {
-        public bool? InCombat { get; set; }
-        public ObservableCollection<ActionResourceManager.Astrologian.AstrologianCard> HasHeldCard { get; set; } = new AsyncObservableCollection<ActionResourceManager.Astrologian.AstrologianCard>();
-        public ObservableCollection<ActionResourceManager.Astrologian.AstrologianCard> DoesntHaveHeldCard { get; set; } = new AsyncObservableCollection<ActionResourceManager.Astrologian.AstrologianCard>();
-        public bool? CanSpread { get; set; }
-        public ObservableCollection<ClassJobType> JobsNotInParty { get; set; } = new AsyncObservableCollection<ClassJobType>();
-        public ObservableCollection<CardRole> RolesNotInParty { get; set; } = new AsyncObservableCollection<CardRole>();
     }
 
     public class TargetConditions
     {
         public bool? HasTarget { get; set; }
-        public float? HpLessThan { get; set; } = 100;
-        public float? MpLessThan { get; set; } = 100;
-        public float? TpLessThan { get; set; } = 100;
-        public ObservableCollection<CardRole> IsRole { get; set; } = new AsyncObservableCollection<CardRole>();
         public ObservableCollection<ClassJobType> JobOrder { get; set; } = new AsyncObservableCollection<ClassJobType>();
         public ObservableCollection<ClassJobType> IsJob { get; set; } = new AsyncObservableCollection<ClassJobType>();
-        public CardChoiceType? Choice { get; set; }
         public string PlayerName { get; set; }
-        public int? WithAlliesNearbyMoreThan { get; set; } = 0;
     }
 
     public enum CardLogicType
@@ -775,38 +752,12 @@ namespace Magitek.Models.Astrologian
         Pvp = 3
     }
 
-    public enum CardPlayType
+    public enum AstrologianCardType
     {
-        Drawn = 0,
-        Held = 1
-    }
-
-    public enum CardAction
-    {
-        Play = 0,
-        Spread = 1,
-        MinorArcana = 2,
-        Redraw = 3,
-        Undraw = 4,
-        UndrawSpread = 5,
-        StopLogic = 6
-    }
-
-    public enum CardTarget
-    {
-        Me = 0,
-        PartyMember = 1,
-    }
-
-    public enum CardRole
-    {
-        Healer = 0,
-        Tank = 1,
-        Dps = 2,
-    }
-
-    public enum CardChoiceType
-    {
-        Random = 0
+        None = 0,
+        MeleeDPS = 1,
+        RangedDPS = 2,
+        UpgradedMeleeDPS = 2,
+        UpgradedRangedDPS = 3
     }
 }

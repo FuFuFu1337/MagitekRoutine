@@ -55,29 +55,9 @@ namespace Magitek.Views.UserControls.Astrologian
             CardRulesList.ScrollIntoView(CardRulesList.SelectedItem);
         }
 
-        private void CombatSettingsToggleCheckChanged(object sender, RoutedEventArgs e)
-        {
-            AstrologianCardRules.Instance.ResetCombatSettingsUi();
-        }
-
-        private void HasHeldCardCheckChanged(object sender, RoutedEventArgs e)
-        {
-            AstrologianCardRules.Instance.ResetHasHeldCardSettingsUi();
-        }
-
-        private void DoesNotHaveHeldCardCheckChanged(object sender, RoutedEventArgs e)
-        {
-            AstrologianCardRules.Instance.ResetDoesNotHaveHeldCardSettingsUi();
-        }
-
         private void IsJobCheckChanged(object sender, RoutedEventArgs e)
         {
             AstrologianCardRules.Instance.ResetIsJobSettingsUi();
-        }
-
-        private void IsRoleCheckChanged(object sender, RoutedEventArgs e)
-        {
-            AstrologianCardRules.Instance.ResetIsRoleSettingsUi();
         }
 
         private void TargetHasTargetCheckChanged(object sender, RoutedEventArgs e)

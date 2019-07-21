@@ -15,39 +15,21 @@
 
     <UserControl.Resources>
         <ResourceDictionary>
+            <ObjectDataProvider x:Key="AstrologianCardTypes" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="astroEnums:AstrologianCardType" />
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
+
             <ObjectDataProvider x:Key="CardLogicTypes" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
                 <ObjectDataProvider.MethodParameters>
                     <x:Type TypeName="astroEnums:CardLogicType" />
                 </ObjectDataProvider.MethodParameters>
             </ObjectDataProvider>
 
-            <ObjectDataProvider x:Key="CardPlayTypes" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
-                <ObjectDataProvider.MethodParameters>
-                    <x:Type TypeName="astroEnums:CardPlayType" />
-                </ObjectDataProvider.MethodParameters>
-            </ObjectDataProvider>
-
-            <ObjectDataProvider x:Key="CardActions" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
-                <ObjectDataProvider.MethodParameters>
-                    <x:Type TypeName="astroEnums:CardAction" />
-                </ObjectDataProvider.MethodParameters>
-            </ObjectDataProvider>
-
-            <ObjectDataProvider x:Key="CardTargets" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
-                <ObjectDataProvider.MethodParameters>
-                    <x:Type TypeName="astroEnums:CardTarget" />
-                </ObjectDataProvider.MethodParameters>
-            </ObjectDataProvider>
-
             <ObjectDataProvider x:Key="MagitekClassJobTypes" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
                 <ObjectDataProvider.MethodParameters>
                     <x:Type TypeName="enums:MagitekClassJobType" />
-                </ObjectDataProvider.MethodParameters>
-            </ObjectDataProvider>
-
-            <ObjectDataProvider x:Key="AstrologianCards" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
-                <ObjectDataProvider.MethodParameters>
-                    <x:Type TypeName="rbEnums:ActionResourceManager+Astrologian+AstrologianCard" />
                 </ObjectDataProvider.MethodParameters>
             </ObjectDataProvider>
 
@@ -399,36 +381,17 @@
             <StackPanel>
 
                 <StackPanel Margin="5,0,0,0" HorizontalAlignment="Center">
-                    <StackPanel Margin="0,5,0,0">
-                        <TextBlock Foreground="Gray" Text="Card:" />
-
-                        <ComboBox Width="106" HorizontalAlignment="Left" ItemsSource="{Binding Source={StaticResource AstrologianCards}}" SelectedValue="{Binding SelectedCardRules.Card}" Style="{DynamicResource ComboBox}" />
-                    </StackPanel>
-
                     <StackPanel Margin="0,5,0,15" Orientation="Horizontal">
-
-                        <StackPanel>
-                            <TextBlock Foreground="Gray" Text="Logic Type:" />
-
-                            <ComboBox Width="106" ItemsSource="{Binding Source={StaticResource CardLogicTypes}}" SelectedValue="{Binding SelectedCardRules.LogicType}" Style="{DynamicResource ComboBox}" />
-                        </StackPanel>
-
                         <StackPanel Margin="5,0,0,0">
-                            <TextBlock Foreground="Gray" Text="Play Type:" />
+                            <TextBlock Foreground="Gray" Text="Card-Type:" />
 
-                            <ComboBox Width="106" ItemsSource="{Binding Source={StaticResource CardPlayTypes}}" SelectedValue="{Binding SelectedCardRules.PlayType}" Style="{DynamicResource ComboBox}" />
-                        </StackPanel>
-
-                        <StackPanel Margin="5,0,0,0">
-                            <TextBlock Foreground="Gray" Text="Action:" />
-
-                            <ComboBox Width="106" ItemsSource="{Binding Source={StaticResource CardActions}}" SelectedValue="{Binding SelectedCardRules.Action}" Style="{DynamicResource ComboBox}" />
+                            <ComboBox Width="106" HorizontalAlignment="Left" ItemsSource="{Binding Source={StaticResource AstrologianCardTypes}}" SelectedValue="{Binding SelectedCardRules.Card}" Style="{DynamicResource ComboBox}" />
                         </StackPanel>
 
                         <StackPanel Margin="5,0,0,5">
-                            <TextBlock Foreground="Gray" Text="Card Target:" />
+                            <TextBlock Foreground="Gray" Text="Logic Type:" />
 
-                            <ComboBox Name="CardTargetSelected" Width="106" ItemsSource="{Binding Source={StaticResource CardTargets}}" SelectedValue="{Binding SelectedCardRules.Target}" Style="{DynamicResource ComboBox}" />
+                            <ComboBox Width="106" ItemsSource="{Binding Source={StaticResource CardLogicTypes}}" SelectedValue="{Binding SelectedCardRules.LogicType}" Style="{DynamicResource ComboBox}" />
                         </StackPanel>
 
                     </StackPanel>
@@ -436,254 +399,11 @@
 
                 <StackPanel Orientation="Horizontal">
                     <StackPanel>
-                        <StackPanel Height="320" Margin="8,0,0,0" Background="{DynamicResource Background}">
-
-                            <StackPanel Margin="0,5,0,0">
-                                <Border BorderBrush="{DynamicResource Black50}" BorderThickness="0,0,0,1">
-                                    <TextBlock FontSize="10" Style="{DynamicResource TextBlockDefault}" Text="Combat Settings" />
-                                </Border>
-
-                                <StackPanel Margin="0,3,0,0" Orientation="Horizontal">
-                                    <RadioButton Width="70"
-                                                 Margin="0,0,1,0"
-                                                 Checked="CombatSettingsToggleCheckChanged"
-                                                 Content="IN COMBAT"
-                                                 GroupName="CombatSettings"
-                                                 IsChecked="{Binding CombatSettingsInCombat, Mode=TwoWay}" />
-                                    <RadioButton Width="70"
-                                                 Margin="0,0,1,0"
-                                                 Checked="CombatSettingsToggleCheckChanged"
-                                                 Content="OUT OF COMBAT"
-                                                 GroupName="CombatSettings"
-                                                 IsChecked="{Binding CombatSettingsOutOfCombat, Mode=TwoWay}" />
-                                    <RadioButton Width="70"
-                                                 Margin="0,0,1,0"
-                                                 Checked="CombatSettingsToggleCheckChanged"
-                                                 Content="BOTH"
-                                                 GroupName="CombatSettings"
-                                                 IsChecked="{Binding CombatSettingsBoth, Mode=TwoWay}" />
-                                </StackPanel>
-                            </StackPanel>
-
-                            <StackPanel Margin="0,5,0,0">
-                                <Border BorderBrush="{DynamicResource Black50}" BorderThickness="0,0,0,1">
-                                    <TextBlock FontSize="10" Style="{DynamicResource TextBlockDefault}" Text="Has Held Card" />
-                                </Border>
-                                <StackPanel Margin="0,3,0,0" Orientation="Horizontal">
-
-                                    <StackPanel>
-                                        <StackPanel Orientation="Horizontal">
-                                            <ToggleButton Width="53"
-                                                          Margin="0,0,1,0"
-                                                          Checked="HasHeldCardCheckChanged"
-                                                          Content="NONE"
-                                                          IsChecked="{Binding HasHeldNone, Mode=TwoWay}"
-                                                          Unchecked="HasHeldCardCheckChanged" />
-                                            <ToggleButton Width="53"
-                                                          Margin="0,0,1,0"
-                                                          Checked="HasHeldCardCheckChanged"
-                                                          Content="BOLE"
-                                                          IsChecked="{Binding HasHeldBole, Mode=TwoWay}"
-                                                          Unchecked="HasHeldCardCheckChanged" />
-                                            <ToggleButton Width="53"
-                                                          Margin="0,0,1,0"
-                                                          Checked="HasHeldCardCheckChanged"
-                                                          Content="EWER"
-                                                          IsChecked="{Binding HasHeldEwer, Mode=TwoWay}"
-                                                          Unchecked="HasHeldCardCheckChanged" />
-                                            <ToggleButton Width="53"
-                                                          Margin="0,0,1,0"
-                                                          Checked="HasHeldCardCheckChanged"
-                                                          Content="BALANCE"
-                                                          IsChecked="{Binding HasHeldBalance, Mode=TwoWay}"
-                                                          Unchecked="HasHeldCardCheckChanged" />
-                                        </StackPanel>
-
-                                        <StackPanel Margin="0,1,0,0" Orientation="Horizontal">
-                                            <ToggleButton Width="53"
-                                                          Margin="0,0,1,0"
-                                                          Checked="HasHeldCardCheckChanged"
-                                                          Content="SPEAR"
-                                                          IsChecked="{Binding HasHeldSpear, Mode=TwoWay}"
-                                                          Unchecked="HasHeldCardCheckChanged" />
-                                            <ToggleButton Width="53"
-                                                          Margin="0,0,1,0"
-                                                          Checked="HasHeldCardCheckChanged"
-                                                          Content="SPIRE"
-                                                          IsChecked="{Binding HasHeldSpire, Mode=TwoWay}"
-                                                          Unchecked="HasHeldCardCheckChanged" />
-                                            <ToggleButton Width="53"
-                                                          Margin="0,0,1,0"
-                                                          Checked="HasHeldCardCheckChanged"
-                                                          Content="ARROW"
-                                                          IsChecked="{Binding HasHeldArrow, Mode=TwoWay}"
-                                                          Unchecked="HasHeldCardCheckChanged" />
-                                        </StackPanel>
-                                    </StackPanel>
-
-                                </StackPanel>
-                            </StackPanel>
-
-                            <StackPanel Margin="0,5,0,0">
-                                <Border BorderBrush="{DynamicResource Black50}" BorderThickness="0,0,0,1">
-                                    <TextBlock FontSize="10" Style="{DynamicResource TextBlockDefault}" Text="Doesn't Have Held Card" />
-                                </Border>
-                                <StackPanel Margin="0,3,0,0" Orientation="Horizontal">
-
-                                    <StackPanel>
-                                        <StackPanel Orientation="Horizontal">
-                                            <ToggleButton Width="53"
-                                                          Margin="0,0,1,0"
-                                                          Checked="DoesNotHaveHeldCardCheckChanged"
-                                                          Content="NONE"
-                                                          IsChecked="{Binding DoesNotHaveHeldNone, Mode=TwoWay}"
-                                                          Unchecked="DoesNotHaveHeldCardCheckChanged" />
-                                            <ToggleButton Width="53"
-                                                          Margin="0,0,1,0"
-                                                          Checked="DoesNotHaveHeldCardCheckChanged"
-                                                          Content="BOLE"
-                                                          IsChecked="{Binding DoesNotHaveHeldBole, Mode=TwoWay}"
-                                                          Unchecked="DoesNotHaveHeldCardCheckChanged" />
-                                            <ToggleButton Width="53"
-                                                          Margin="0,0,1,0"
-                                                          Checked="DoesNotHaveHeldCardCheckChanged"
-                                                          Content="EWER"
-                                                          IsChecked="{Binding DoesNotHaveHeldEwer, Mode=TwoWay}"
-                                                          Unchecked="DoesNotHaveHeldCardCheckChanged" />
-                                            <ToggleButton Width="53"
-                                                          Margin="0,0,1,0"
-                                                          Checked="DoesNotHaveHeldCardCheckChanged"
-                                                          Content="BALANCE"
-                                                          IsChecked="{Binding DoesNotHaveHeldBalance, Mode=TwoWay}"
-                                                          Unchecked="DoesNotHaveHeldCardCheckChanged" />
-                                        </StackPanel>
-
-                                        <StackPanel Margin="0,1,0,0" Orientation="Horizontal">
-                                            <ToggleButton Width="53"
-                                                          Margin="0,0,1,0"
-                                                          Checked="DoesNotHaveHeldCardCheckChanged"
-                                                          Content="SPEAR"
-                                                          IsChecked="{Binding DoesNotHaveHeldSpear, Mode=TwoWay}"
-                                                          Unchecked="DoesNotHaveHeldCardCheckChanged" />
-                                            <ToggleButton Width="53"
-                                                          Margin="0,0,1,0"
-                                                          Checked="DoesNotHaveHeldCardCheckChanged"
-                                                          Content="SPIRE"
-                                                          IsChecked="{Binding DoesNotHaveHeldSpire, Mode=TwoWay}"
-                                                          Unchecked="DoesNotHaveHeldCardCheckChanged" />
-                                            <ToggleButton Width="53"
-                                                          Margin="0,0,1,0"
-                                                          Checked="DoesNotHaveHeldCardCheckChanged"
-                                                          Content="ARROW"
-                                                          IsChecked="{Binding DoesNotHaveHeldArrow, Mode=TwoWay}"
-                                                          Unchecked="DoesNotHaveHeldCardCheckChanged" />
-                                        </StackPanel>
-                                    </StackPanel>
-
-                                </StackPanel>
-                            </StackPanel>
-
-                            <StackPanel Width="215" Margin="0,5,0,0" HorizontalAlignment="Left">
-                                <Border BorderBrush="{DynamicResource Black50}" BorderThickness="0,0,0,1">
-                                    <TextBlock FontSize="10" Style="{DynamicResource TextBlockDefault}" Text="Must The Card Target Also Have A Target?" />
-                                </Border>
-                                <StackPanel Margin="0,3,0,0" Orientation="Horizontal">
-                                    <RadioButton Name="TargetYes"
-                                                 Width="70"
-                                                 Margin="0,0,1,0"
-                                                 Checked="TargetHasTargetCheckChanged"
-                                                 Content="YES"
-                                                 GroupName="TargetHasTarget"
-                                                 IsChecked="{Binding TargetHasTargetYes, Mode=TwoWay}" />
-                                    <RadioButton Name="TargetNo"
-                                                 Width="70"
-                                                 Margin="0,0,1,0"
-                                                 Checked="TargetHasTargetCheckChanged"
-                                                 Content="NO"
-                                                 GroupName="TargetHasTarget"
-                                                 IsChecked="{Binding TargetHasTargetNo, Mode=TwoWay}" />
-                                    <RadioButton Name="TargetDoesntMatter"
-                                                 Width="70"
-                                                 Margin="0,0,1,0"
-                                                 Checked="TargetHasTargetCheckChanged"
-                                                 Content="DOESNT MATTER"
-                                                 GroupName="TargetHasTarget"
-                                                 IsChecked="{Binding TargetHasTargetDoesntMatter, Mode=TwoWay}" />
-                                </StackPanel>
-                            </StackPanel>
-                        </StackPanel>
-                    </StackPanel>
-                    <StackPanel>
                         <StackPanel>
 
                             <StackPanel Margin="5,0,0,0">
 
                                 <StackPanel Height="320" Orientation="Horizontal">
-
-                                    <controls:SettingsBlock Width="162" Margin="5,0,0,0" Background="{DynamicResource ClassSelectorBackground}">
-                                        <StackPanel Margin="3">
-                                            <TextBlock Margin="0,10,0,0" HorizontalAlignment="Center" Style="{DynamicResource TextBlockDefault}" Text="Target Conditions" />
-
-                                            <StackPanel Margin="0,10" HorizontalAlignment="Center">
-                                                <controls:NumericSmall Width="136"
-                                                                       FirstText="Less Than"
-                                                                       Increment="5"
-                                                                       MaxValue="100"
-                                                                       MinValue="1"
-                                                                       SecondText="Health Percent"
-                                                                       Value="{Binding SelectedCardRules.TargetConditions.HpLessThan, Mode=TwoWay}" />
-                                                <controls:NumericSmall Width="136"
-                                                                       Margin="0,2,0,0"
-                                                                       FirstText="Less Than"
-                                                                       Increment="5"
-                                                                       MaxValue="100"
-                                                                       MinValue="1"
-                                                                       SecondText="Mana Percent"
-                                                                       Value="{Binding SelectedCardRules.TargetConditions.MpLessThan, Mode=TwoWay}" />
-                                                <controls:NumericSmall Width="136"
-                                                                       Margin="0,2,0,0"
-                                                                       FirstText="Less Than"
-                                                                       Increment="5"
-                                                                       MaxValue="100"
-                                                                       MinValue="1"
-                                                                       SecondText="TP Percent"
-                                                                       Value="{Binding SelectedCardRules.TargetConditions.TpLessThan, Mode=TwoWay}" />
-                                            </StackPanel>
-
-                                            <StackPanel Margin="0,0,0,5">
-                                                <StackPanel HorizontalAlignment="Center">
-                                                    <controls:NumericSmall Width="136"
-                                                                           FirstText="More Than"
-                                                                           Increment="1"
-                                                                           MaxValue="8"
-                                                                           MinValue="0"
-                                                                           SecondText="Allies Nearby"
-                                                                           Value="{Binding SelectedCardRules.TargetConditions.WithAlliesNearbyMoreThan, Mode=TwoWay}" />
-                                                </StackPanel>
-                                            </StackPanel>
-
-                                            <StackPanel Margin="12,0,0,0">
-                                                <StackPanel.Style>
-                                                    <Style>
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding ElementName=CardTargetSelected, Path=SelectedValue}" Value="Me">
-                                                                <Setter Property="StackPanel.Visibility" Value="Hidden" />
-                                                            </DataTrigger>
-                                                            <DataTrigger Binding="{Binding ElementName=CardTargetSelected, Path=SelectedValue}" Value="PartyMember">
-                                                                <Setter Property="StackPanel.Visibility" Value="Visible" />
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </StackPanel.Style>
-                                                <TextBlock FontSize="10" Foreground="Gray" Text="Specific Target Name:" />
-                                                <StackPanel Margin="0,3,0,0" Orientation="Horizontal">
-                                                    <TextBox Width="136" Height="20" Template="{DynamicResource TextBoxTemplate}" Text="{Binding SelectedCardRules.TargetConditions.PlayerName, Mode=TwoWay}" />
-                                                </StackPanel>
-
-                                            </StackPanel>
-
-                                        </StackPanel>
-                                    </controls:SettingsBlock>
 
                                     <controls:SettingsBlock Margin="5,0,0,0" Background="{DynamicResource ClassSelectorBackground}">
                                         <Grid>
@@ -693,12 +413,6 @@
                                             </Grid.ColumnDefinitions>
 
                                             <StackPanel Grid.Column="1" Width="47" VerticalAlignment="Center">
-
-                                                <StackPanel>
-                                                    <ToggleButton Checked="IsRoleCheckChanged" Content="TANK" IsChecked="{Binding IsRoleTank, Mode=TwoWay}" Unchecked="IsRoleCheckChanged" />
-                                                    <ToggleButton Checked="IsRoleCheckChanged" Content="HEALER" IsChecked="{Binding IsRoleHealer, Mode=TwoWay}" Unchecked="IsRoleCheckChanged" />
-                                                    <ToggleButton Checked="IsRoleCheckChanged" Content="DPS" IsChecked="{Binding IsRoleDps, Mode=TwoWay}" Unchecked="IsRoleCheckChanged" />
-                                                </StackPanel>
 
                                                 <StackPanel Margin="0,20,0,0">
                                                     <ToggleButton Checked="IsJobCheckChanged" Content="SCH" IsChecked="{Binding IsJobScholar, Mode=TwoWay}" Unchecked="IsJobCheckChanged" />

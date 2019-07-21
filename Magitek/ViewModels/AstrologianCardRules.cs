@@ -58,27 +58,14 @@ namespace Magitek.ViewModels
             }
         }
 
-        private string _card;
+        private string _cardType;
 
-        public string Card
+        public string CardType
         {
-            get => _card;
+            get => _cardType;
             set
             {
-                _card = value;
-                ResetCollectionViewSource();
-                OnPropertyChanged();
-            }
-        }
-
-        private string _cardPlayType;
-
-        public string CardPlayType
-        {
-            get => _cardPlayType;
-            set
-            {
-                _cardPlayType = value;
+                _cardType = value;
                 ResetCollectionViewSource();
                 OnPropertyChanged();
             }
@@ -118,67 +105,24 @@ namespace Magitek.ViewModels
                         break;
                 }
 
-                switch (Card)
+                switch (CardType)
                 {
-                    case "All":
+                    case "MeleeDPS":
+                        if (cardRule.CardType != AstrologianCardType.MeleeDPS)
+                            return false;
                         break;
-
-                    case "Balance":
-                        if (cardRule.Card != ActionResourceManager.Astrologian.AstrologianCard.Balance)
+                    case "UpgradedMeleeDPS":
+                        if (cardRule.CardType != AstrologianCardType.UpgradedMeleeDPS)
                             return false;
                         break;
 
-                    case "Bole":
-                        if (cardRule.Card != ActionResourceManager.Astrologian.AstrologianCard.Bole)
+                    case "RangedDPS":
+                        if (cardRule.CardType != AstrologianCardType.RangedDPS)
                             return false;
                         break;
 
-                    case "Spire":
-                        if (cardRule.Card != ActionResourceManager.Astrologian.AstrologianCard.Spire)
-                            return false;
-                        break;
-
-                    case "Spear":
-                        if (cardRule.Card != ActionResourceManager.Astrologian.AstrologianCard.Spear)
-                            return false;
-                        break;
-
-                    case "Ewer":
-                        if (cardRule.Card != ActionResourceManager.Astrologian.AstrologianCard.Ewer)
-                            return false;
-                        break;
-
-                    case "Arrow":
-                        if (cardRule.Card != ActionResourceManager.Astrologian.AstrologianCard.Arrow)
-                            return false;
-                        break;
-
-                    case "Lord":
-                        if (cardRule.Card != ActionResourceManager.Astrologian.AstrologianCard.LordofCrowns)
-                            return false;
-                        break;
-
-                    case "Lady":
-                        if (cardRule.Card != ActionResourceManager.Astrologian.AstrologianCard.LadyofCrowns)
-                            return false;
-                        break;
-
-                    default:
-                        break;
-                }
-
-                switch (CardPlayType)
-                {
-                    case "Both":
-                        break;
-
-                    case "Held":
-                        if (cardRule.PlayType != Models.Astrologian.CardPlayType.Held)
-                            return false;
-                        break;
-
-                    case "Drawn":
-                        if (cardRule.PlayType != Models.Astrologian.CardPlayType.Drawn)
+                    case "UpgradedRangedDPS":
+                        if (cardRule.CardType != AstrologianCardType.UpgradedRangedDPS)
                             return false;
                         break;
 
@@ -277,8 +221,7 @@ namespace Magitek.ViewModels
             }
             
             var newCardLogicType = CardLogicType.Party;
-            var newCardPlayType = Models.Astrologian.CardPlayType.Drawn;
-            var newCardCard = ActionResourceManager.Astrologian.AstrologianCard.None;
+            var newCardType = AstrologianCardType.None;
 
             switch (LogicType)
             {
@@ -299,64 +242,27 @@ namespace Magitek.ViewModels
                     break;
             }
 
-            switch (CardPlayType)
+            switch (CardType)
             {
-                case ("Held"):
-                    newCardPlayType = Models.Astrologian.CardPlayType.Held;
+                case ("RangeDPS"):
+                    newCardType = AstrologianCardType.RangedDPS;
                     break;
-                default:
-                    newCardPlayType = Models.Astrologian.CardPlayType.Drawn;
+                case ("UpgradedRangeDPS"):
+                    newCardType = AstrologianCardType.UpgradedRangedDPS;
                     break;
-            }
-            switch (Card)
-            {
-                case ("All"):
-                    newCardCard = SelectedCardRules.Card;
+                case ("MeleeDPS"):
+                    newCardType = AstrologianCardType.MeleeDPS;
                     break;
-                case ("Balance"):
-                    newCardCard = ActionResourceManager.Astrologian.AstrologianCard.Balance;
-                    break;
-                case ("Bole"):
-                    newCardCard = ActionResourceManager.Astrologian.AstrologianCard.Bole;
-                    break;
-                case ("Arrow"):
-                    newCardCard = ActionResourceManager.Astrologian.AstrologianCard.Arrow;
-                    break;
-                case ("Spear"):
-                    newCardCard = ActionResourceManager.Astrologian.AstrologianCard.Spear;
-                    break;
-                case ("Ewer"):
-                    newCardCard = ActionResourceManager.Astrologian.AstrologianCard.Ewer;
-                    break;
-                case ("Spire"):
-                    newCardCard = ActionResourceManager.Astrologian.AstrologianCard.Spire;
-                    break;
-                case ("Lady"):
-                    newCardCard = ActionResourceManager.Astrologian.AstrologianCard.LadyofCrowns;
-                    break;
-                case ("Lord"):
-                    newCardCard = ActionResourceManager.Astrologian.AstrologianCard.LordofCrowns;
-                    break;
-                default:
-                    newCardCard = SelectedCardRules.Card;
+                case ("UpgradedMeleeDPS"):
+                    newCardType = AstrologianCardType.UpgradedMeleeDPS;
                     break;
             }
 
             var newCard = new CardRule
             {
                 CardPriority = newPriority,
-                Card = newCardCard,
-                LogicType = newCardLogicType,
-                PlayType = newCardPlayType,
-                Conditions = new Conditions(),
-                Action = CardAction.Play,
-                Target = CardTarget.Me,
-                TargetConditions = new TargetConditions()
-                {
-                    TpLessThan = 100,
-                    HpLessThan = 100,
-                    MpLessThan = 100
-                }
+                CardType = newCardType,
+                LogicType = newCardLogicType
             };
 
             Logger.WriteInfo($"Adding new card at {newPriority}");
@@ -382,72 +288,6 @@ namespace Magitek.ViewModels
         #endregion
 
         // Toggle Buttons
-        #region IsRole
-        public bool IsRoleTank { get; set; }
-        public bool IsRoleHealer { get; set; }
-        public bool IsRoleDps { get; set; }
-
-        public void ResetIsRoleSettingsUi()
-        {
-            try
-            {
-                if (SelectedCardRules == null)
-                    return;
-
-                if (SelectedCardRules.TargetConditions == null)
-                {
-                    SelectedCardRules.TargetConditions = new TargetConditions();
-                }
-
-                if (SelectedCardRules.TargetConditions.IsRole == null)
-                {
-                    SelectedCardRules.TargetConditions.IsRole =
-                        new AsyncObservableCollection<CardRole>();
-                }
-
-                SelectedCardRules.TargetConditions.IsRole.Clear();
-
-                if (IsRoleTank)
-                {
-                    SelectedCardRules.TargetConditions.IsRole.Add(CardRole.Tank);
-                }
-
-                if (IsRoleHealer)
-                {
-                    SelectedCardRules.TargetConditions.IsRole.Add(CardRole.Healer);
-                }
-
-                if (IsRoleDps)
-                {
-                    SelectedCardRules.TargetConditions.IsRole.Add(CardRole.Dps);
-                }
-            }
-            catch
-            {
-                if (BaseSettings.Instance.GeneralSettings.DebugCastingCallerMemberName)
-                {
-                    Logger.WriteInfo(@"Something weird just happened with Card Rules. This is a known issue and is being worked on.");
-                }
-            }
-        }
-
-        private void LoadIsRoleSettingsUi()
-        {
-            if (SelectedCardRules?.TargetConditions == null)
-            {
-                IsRoleTank = false;
-                IsRoleHealer = false;
-                IsRoleDps = false;
-                return;
-            }
-
-            var tempList = new List<CardRole>(SelectedCardRules.TargetConditions.IsRole);
-
-            IsRoleTank = tempList.Contains(CardRole.Tank);
-            IsRoleHealer = tempList.Contains(CardRole.Healer);
-            IsRoleDps = tempList.Contains(CardRole.Dps);
-        }
-        #endregion
 
         #region IsJob
         public bool IsJobAstrologian { get; set; }
@@ -465,6 +305,8 @@ namespace Magitek.ViewModels
         public bool IsJobMonk { get; set; }
         public bool IsJobNinja { get; set; }
         public bool IsJobSamurai { get; set; }
+        public bool IsJobDancer { get; set; }
+        public bool IsJobGunbreaker { get; set; }
 
         public void ResetIsJobSettingsUi()
         {
@@ -569,6 +411,16 @@ namespace Magitek.ViewModels
                 {
                     SelectedCardRules.TargetConditions.IsJob.Add(ClassJobType.Samurai);
                 }
+
+                if (IsJobDancer)
+                {
+                    SelectedCardRules.TargetConditions.IsJob.Add(ClassJobType.Dancer);
+                }
+
+                if (IsJobGunbreaker)
+                {
+                    SelectedCardRules.TargetConditions.IsJob.Add(ClassJobType.Gunbreaker);
+                }
             }
             catch
             {
@@ -598,6 +450,8 @@ namespace Magitek.ViewModels
                 IsJobMonk = false;
                 IsJobNinja = false;
                 IsJobSamurai = false;
+                IsJobGunbreaker = false;
+                IsJobDancer = false;
                 return;
             }
 
@@ -618,261 +472,8 @@ namespace Magitek.ViewModels
             IsJobMonk = tempList.Contains(ClassJobType.Monk);
             IsJobNinja = tempList.Contains(ClassJobType.Ninja);
             IsJobSamurai = tempList.Contains(ClassJobType.Samurai);
-        }
-        #endregion
-
-        #region HasHeldCard
-        public bool DoesNotHaveHeldEwer { get; set; }
-        public bool DoesNotHaveHeldBole { get; set; }
-        public bool DoesNotHaveHeldBalance { get; set; }
-        public bool DoesNotHaveHeldSpear { get; set; }
-        public bool DoesNotHaveHeldNone { get; set; }
-        public bool DoesNotHaveHeldSpire { get; set; }
-        public bool DoesNotHaveHeldArrow { get; set; }
-
-        public void ResetDoesNotHaveHeldCardSettingsUi()
-        {
-            try {
-                if (SelectedCardRules == null)
-                    return;
-
-                if (SelectedCardRules.Conditions == null)
-                {
-                    SelectedCardRules.Conditions = new Conditions();
-                }
-
-                SelectedCardRules.Conditions.DoesntHaveHeldCard.Clear();
-
-                if (DoesNotHaveHeldEwer)
-                {
-                    SelectedCardRules.Conditions.DoesntHaveHeldCard.Add(ActionResourceManager.Astrologian.AstrologianCard.Ewer);
-                }
-
-                if (DoesNotHaveHeldBole)
-                {
-                    SelectedCardRules.Conditions.DoesntHaveHeldCard.Add(ActionResourceManager.Astrologian.AstrologianCard.Bole);
-                }
-
-                if (DoesNotHaveHeldBalance)
-                {
-                    SelectedCardRules.Conditions.DoesntHaveHeldCard.Add(ActionResourceManager.Astrologian.AstrologianCard.Balance);
-                }
-
-                if (DoesNotHaveHeldSpear)
-                {
-                    SelectedCardRules.Conditions.DoesntHaveHeldCard.Add(ActionResourceManager.Astrologian.AstrologianCard.Spear);
-                }
-
-                if (DoesNotHaveHeldNone)
-                {
-                    SelectedCardRules.Conditions.DoesntHaveHeldCard.Add(ActionResourceManager.Astrologian.AstrologianCard.None);
-                }
-
-                if (DoesNotHaveHeldSpire)
-                {
-                    SelectedCardRules.Conditions.DoesntHaveHeldCard.Add(ActionResourceManager.Astrologian.AstrologianCard.Spire);
-                }
-
-                if (DoesNotHaveHeldArrow)
-                {
-                    SelectedCardRules.Conditions.DoesntHaveHeldCard.Add(ActionResourceManager.Astrologian.AstrologianCard.Arrow);
-                }
-            }
-            catch
-            {
-                if (BaseSettings.Instance.GeneralSettings.DebugCastingCallerMemberName)
-                {
-                    Logger.WriteInfo(@"Something weird just happened with Card Rules. This is a known issue and is being worked on.");
-                }
-            }
-        }
-
-        private void LoadDoesNotHaveHeldCardSettingsUi()
-        {
-            if (SelectedCardRules?.Conditions == null)
-            {
-                DoesNotHaveHeldEwer = false;
-                DoesNotHaveHeldBole = false;
-                DoesNotHaveHeldBalance = false;
-                DoesNotHaveHeldSpear = false;
-                DoesNotHaveHeldNone = false;
-                DoesNotHaveHeldSpire = false;
-                DoesNotHaveHeldArrow = false;
-                return;
-            }
-
-            var tempList = new List<ActionResourceManager.Astrologian.AstrologianCard>(SelectedCardRules.Conditions.DoesntHaveHeldCard);
-
-            DoesNotHaveHeldEwer = tempList.Contains(ActionResourceManager.Astrologian.AstrologianCard.Ewer);
-            DoesNotHaveHeldBole = tempList.Contains(ActionResourceManager.Astrologian.AstrologianCard.Bole);
-            DoesNotHaveHeldBalance = tempList.Contains(ActionResourceManager.Astrologian.AstrologianCard.Balance);
-            DoesNotHaveHeldSpear = tempList.Contains(ActionResourceManager.Astrologian.AstrologianCard.Spear);
-            DoesNotHaveHeldNone = tempList.Contains(ActionResourceManager.Astrologian.AstrologianCard.None);
-            DoesNotHaveHeldSpire = tempList.Contains(ActionResourceManager.Astrologian.AstrologianCard.Spire);
-            DoesNotHaveHeldArrow = tempList.Contains(ActionResourceManager.Astrologian.AstrologianCard.Arrow);
-        }
-        #endregion
-
-        #region HasHeldCard
-        public bool HasHeldEwer { get; set; }
-        public bool HasHeldBole { get; set; }
-        public bool HasHeldBalance { get; set; }
-        public bool HasHeldSpear { get; set; }
-        public bool HasHeldNone { get; set; }
-        public bool HasHeldSpire { get; set; }
-        public bool HasHeldArrow { get; set; }
-
-        public void ResetHasHeldCardSettingsUi()
-        {
-            try
-            {
-                if (SelectedCardRules == null)
-                    return;
-
-                if (SelectedCardRules.Conditions == null)
-                {
-                    SelectedCardRules.Conditions = new Conditions();
-                }
-
-                //TODO: This null check didn't work -_-
-                if (SelectedCardRules.Conditions.HasHeldCard == null)
-                    return;
-
-                SelectedCardRules.Conditions.HasHeldCard.Clear();
-
-
-                if (HasHeldEwer)
-                {
-                    SelectedCardRules.Conditions.HasHeldCard.Add(ActionResourceManager.Astrologian.AstrologianCard
-                        .Ewer);
-                }
-
-                if (HasHeldBole)
-                {
-                    SelectedCardRules.Conditions.HasHeldCard.Add(ActionResourceManager.Astrologian.AstrologianCard
-                        .Bole);
-                }
-
-                if (HasHeldBalance)
-                {
-                    SelectedCardRules.Conditions.HasHeldCard.Add(ActionResourceManager.Astrologian.AstrologianCard
-                        .Balance);
-                }
-
-                if (HasHeldSpear)
-                {
-                    SelectedCardRules.Conditions.HasHeldCard.Add(
-                        ActionResourceManager.Astrologian.AstrologianCard.Spear);
-                }
-
-                if (HasHeldNone)
-                {
-                    SelectedCardRules.Conditions.HasHeldCard.Add(ActionResourceManager.Astrologian.AstrologianCard
-                        .None);
-                }
-
-                if (HasHeldSpire)
-                {
-                    SelectedCardRules.Conditions.HasHeldCard.Add(
-                        ActionResourceManager.Astrologian.AstrologianCard.Spire);
-                }
-
-                if (HasHeldArrow)
-                {
-                    SelectedCardRules.Conditions.HasHeldCard.Add(
-                        ActionResourceManager.Astrologian.AstrologianCard.Arrow);
-                }
-
-            }
-            catch
-            {
-                if (BaseSettings.Instance.GeneralSettings.DebugCastingCallerMemberName)
-                {
-                    Logger.WriteInfo(@"Something weird just happened with Card Rules. This is a known issue and is being worked on.");
-                }
-            }
-        }
-
-        private void LoadHasHeldCardSettingsUi()
-        {
-            if (SelectedCardRules?.Conditions == null)
-            {
-                HasHeldEwer = false;
-                HasHeldBole = false;
-                HasHeldBalance = false;
-                HasHeldSpear = false;
-                HasHeldNone = false;
-                HasHeldSpire = false;
-                HasHeldArrow = false;
-                return;
-            }
-
-            var tempList = new List<ActionResourceManager.Astrologian.AstrologianCard>(SelectedCardRules.Conditions.HasHeldCard);
-
-            HasHeldEwer = tempList.Contains(ActionResourceManager.Astrologian.AstrologianCard.Ewer);
-            HasHeldBole = tempList.Contains(ActionResourceManager.Astrologian.AstrologianCard.Bole);
-            HasHeldBalance = tempList.Contains(ActionResourceManager.Astrologian.AstrologianCard.Balance);
-            HasHeldSpear = tempList.Contains(ActionResourceManager.Astrologian.AstrologianCard.Spear);
-            HasHeldNone = tempList.Contains(ActionResourceManager.Astrologian.AstrologianCard.None);
-            HasHeldSpire = tempList.Contains(ActionResourceManager.Astrologian.AstrologianCard.Spire);
-            HasHeldArrow = tempList.Contains(ActionResourceManager.Astrologian.AstrologianCard.Arrow);
-        }
-        #endregion
-        
-        #region Combat Settings
-        public bool CombatSettingsInCombat { get; set; }
-        public bool CombatSettingsOutOfCombat { get; set; }
-        public bool CombatSettingsBoth { get; set; }
-
-        public void ResetCombatSettingsUi()
-        {
-            if (SelectedCardRules == null)
-                return;
-
-            if (SelectedCardRules.Conditions == null)
-            {
-                SelectedCardRules.Conditions = new Conditions();
-            }
-
-            if (CombatSettingsInCombat)
-            {
-                SelectedCardRules.Conditions.InCombat = true;
-            }
-
-            if (CombatSettingsOutOfCombat)
-            {
-                SelectedCardRules.Conditions.InCombat = false;
-            }
-
-            if (CombatSettingsBoth)
-            {
-                SelectedCardRules.Conditions.InCombat = null;
-            }
-        }
-
-        private void LoadCombatSettingsUi()
-        {
-            if (SelectedCardRules?.Conditions == null)
-                return;
-
-            CombatSettingsBoth = false;
-            CombatSettingsOutOfCombat = false;
-            CombatSettingsBoth = false;
-
-            switch (SelectedCardRules.Conditions.InCombat)
-            {
-                case null:
-                    CombatSettingsBoth = true;
-                    return;
-                case true:
-                    CombatSettingsInCombat = true;
-                    return;
-                case false:
-                    CombatSettingsOutOfCombat = true;
-                    return;
-                default:
-                    break;
-            }
+            IsJobDancer = tempList.Contains(ClassJobType.Dancer);
+            IsJobGunbreaker = tempList.Contains(ClassJobType.Gunbreaker);
         }
         #endregion
 
@@ -935,11 +536,7 @@ namespace Magitek.ViewModels
 
         public void ReloadUiElements()
         {
-            LoadCombatSettingsUi();
-            LoadHasHeldCardSettingsUi();
-            LoadDoesNotHaveHeldCardSettingsUi();
             LoadIsJobSettingsUi();
-            LoadIsRoleSettingsUi();
             LoadTargetHasTargetSettingsUi();
         }
 
